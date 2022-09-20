@@ -29,12 +29,15 @@ class _HomePageState extends State<HomePage> {
                                                     context,
                                                     listen: false);
     var userDisplay = widget.username;
+    var themeText;
     
     setState(() {
       if(themeProvider.getTheme == themeProvider.dark){
-        themeIcon = const Icon(Icons.dark_mode);
+        themeIcon = const Icon(Icons.light_mode);
+        themeText = const Text("Change Light Mode");
       } else {
         themeIcon = const Icon(Icons.light_mode);
+        themeText = const Text("Change Dark Mode");
       }
 
       if(widget.username.length > 5){
@@ -81,6 +84,18 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         backgroundColor: Colors.black,
+        actions: <Widget>[
+            PopupMenuButton<ThemeProvider>(
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<ThemeProvider>>[
+                    PopupMenuItem<ThemeProvider>(
+                    child: Row(children: [
+                      themeIcon,
+                      themeText
+                    ]),
+                    onTap:()=>themeProvider.swapTheme()
+                    )
+                ]),
+        ]
       ),
       drawer: Drawer(
         child: ListView(
